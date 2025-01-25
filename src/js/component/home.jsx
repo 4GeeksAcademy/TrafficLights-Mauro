@@ -7,25 +7,58 @@ import rigoImage from "../../img/rigo-baby.jpg";
 //create your first component
 const Home = () => {
 
-	const [buttonLabel, setButtonLabel] = useState('Lights ON')
-	const [selectedColor, setSelectedColor] = useState('')
+	// Setting initial values
+	const [selectedColor, setSelectedColor] = useState('');
+	const [buttonOnOffLights, setButtonOnOffLights] = useState('Lights ON');
+	const [hideNewLight, setHideNewLight] = useState(' d-none');
+	const [labelButtonNewLight, setLabelButtonNewLight] = useState('Add a Light')
 
+	// Here I set how to change the lights
 	const changeLight = () => {
-		
+		// To change it, has to be already on	
 		((selectedColor) === 'red') ? setSelectedColor('yellow') : '';
 		((selectedColor) === 'yellow') ? setSelectedColor('green') : '';
-		((selectedColor) === 'green') ? setSelectedColor('red') : ''		
+		// If it's showing the new one, it will change to it also, but if it's not, it will continue changing between the starters ones 
+		((selectedColor) === 'green') ? ((hideNewLight) === '' ? setSelectedColor('info') : setSelectedColor('red')) : '';
+		((selectedColor) === 'info') ? setSelectedColor('red') : '';
+		
+
 
 	};
 
+	// We can start it by clicking by ourself in any color, or choose starting it by the LightsON button
 	const lightsOnAndOff = () => {
-
+		// The button always starts on the red light
 		((selectedColor) === '') ? setSelectedColor('red') : '';
+		// We can stop lights at any color
 		((selectedColor) === 'red') ? setSelectedColor('') : '';
 		((selectedColor) === 'yellow') ? setSelectedColor('') : '';
 		((selectedColor) === 'green') ? setSelectedColor('') : '';
-		((buttonLabel) === 'Lights ON') ? setButtonLabel('Lights OFF') : '';
-		((buttonLabel) === 'Lights OFF') ? setButtonLabel('Lights ON') : '';		
+		((selectedColor) === 'info') ? setSelectedColor('') : '';
+		// Changing the label on the button on & off
+		((buttonOnOffLights) === 'Lights ON') ? setButtonOnOffLights('Lights OFF') : '';
+		((buttonOnOffLights) === 'Lights OFF') ? setButtonOnOffLights('Lights ON') : '';
+		// I wish I could change the label from the ON & OFF button when I start by myslef the Traffic Lights
+		// I tryed this	
+		
+		// ((selectedColor) === 'red') ? ((buttonOnOffLights) === 'Lights ON' ? setButtonOnOffLights('Lights OFF') : '') : '' ;
+		// ((selectedColor) === 'red') ? ((buttonOnOffLights) === 'Lights OFF' ? setButtonOnOffLights('Lights ON') : '') : '' ;
+		// ((selectedColor) === 'yellow') ? ((buttonOnOffLights) === 'Lights ON' ? setButtonOnOffLights('Lights OFF') : '') : '' ;
+		// ((selectedColor) === 'yellow') ? ((buttonOnOffLights) === 'Lights OFF' ? setButtonOnOffLights('Lights ON') : '') : '' ;
+		// ((selectedColor) === 'green') ? ((buttonOnOffLights) === 'Lights ON' ? setButtonOnOffLights('Lights OFF') : '') : '' ;
+		// ((selectedColor) === 'green') ? ((buttonOnOffLights) === 'Lights OFF' ? setButtonOnOffLights('Lights ON') : '') : '' ;
+		
+		// It was not what I expected hahahahahaha XD
+	};
+
+	const newLight = () => {
+
+		((hideNewLight) === ' d-none') ? setHideNewLight('') : '';
+		((hideNewLight) === '') ? setHideNewLight(' d-none') : '';
+		// Changing the label on the button to show-On or show-Off the new light
+		((labelButtonNewLight) === 'Add a Light') ? setLabelButtonNewLight('Hide the New Light') : '';
+		((labelButtonNewLight) === 'Hide the New Light') ? setLabelButtonNewLight('Add a Light') : '';
+
 
 	};
 
@@ -70,6 +103,15 @@ const Home = () => {
 							<div onClick={() => { setSelectedColor('green') }} className={`spinner-grow text-success position-absolute w-75 h-75 opacity-${(selectedColor === 'green') ? '100' : '0'}`} role="status">
 							</div>
 						</div>
+						<div className={`col-12 bg-black text-black d-flex justify-content-center pb-3 position-relative ${hideNewLight}`}>
+							<div className="col-6 bg-info rounded-circle">
+								<figure className="figure">
+									<img src="..." className="figure-img img-fluid rounded" alt="" />
+								</figure>
+							</div>
+							<div onClick={() => { setSelectedColor('info') }} className={`spinner-grow text-info position-absolute w-75 h-75 opacity-${(selectedColor === 'info') ? '100' : '0'}`} role="status">
+							</div>
+						</div>
 						<div className="col-12 bg-black text-black d-flex justify-content-center">
 							<div className="col-6 bg-black rounded-circle">
 								margin bottom
@@ -79,8 +121,9 @@ const Home = () => {
 				</div>
 			</div>
 			<div className="container d-flex justify-content-center mt-3">
-				<button onClick={changeLight} type="button" className="btn btn-info m-auto">Change Light</button>
-				<button onClick={lightsOnAndOff} type="button" className="btn btn-secondary m-auto">{buttonLabel}</button>
+				<button onClick={lightsOnAndOff} type="button" className="btn btn-secondary m-auto">{buttonOnOffLights}</button>
+				<button onClick={changeLight} type="button" className="btn btn-outline-success m-auto">Change Light</button>
+				<button onClick={newLight} type="button" className="btn btn-info m-auto">{labelButtonNewLight}</button>
 			</div>
 		</div>
 	);
